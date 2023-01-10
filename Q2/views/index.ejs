@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include("navigation.ejs") %>
+    <h1>All tasks</h1>
+    <div class="index-tasks">
+      <% for (let task of tasks) { %>
+      <div class="single-task">
+        <div class="task-content">
+          <p><%= task.task %></p>
+        </div>
+        <div class="task-btn">
+          <a href="/edit-task/<%= task._id %>" class="btn">Edit</a>
+          <form action="/delete-task" method="POST">
+            <input type="hidden" value="<%= task._id %>" name="taskId" />
+            <button class="btn" type="submit">Delete</button>
+          </form>
+          <% if (task.status === "completed") { %>
+          <p class="task-completed">Task is completed</p>
+          <% } else { %>
+          <form action="/mark-complete" method="POST">
+            <input type="hidden" value="<%= task._id %>" name="taskId" />
+            <button type="submit">Mark as complete</button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </body>
+</html>
