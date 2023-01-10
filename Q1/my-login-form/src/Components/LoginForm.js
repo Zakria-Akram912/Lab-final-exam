@@ -6,7 +6,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
 
   const submitHandler = (e) => {
-    const sendRequest = async () => {
+    const sendRequestToServer = async () => {
       const response = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -15,13 +15,12 @@ const LoginForm = () => {
           password: password,
         }),
       });
-      const data = await response.json();
+      const dataFromApi = await response.json();
 
-      setToken(data.token);
-      localStorage.setItem("token", data.token);
-      console.log(data);
+      setToken(dataFromApi.token);
+      localStorage.setItem("token", dataFromApi.token);
     };
-    sendRequest();
+    sendRequestToServer();
     e.preventDefault();
   };
 
